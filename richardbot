@@ -1,0 +1,43 @@
+import os
+import discord
+import random
+
+
+client = discord.Client()
+
+
+warn_words = ["fuck", "shit","henley", "hinley", "shit","bitch","cunt",'fucker']
+x = 0
+
+greeting_words = ["Hi", "Hello", "hey", "Hey"]
+greeting_response = ["Hiya there!", "How are you doing?", "Hi! Welcome." "Hi there!" "Greetings!"]
+starting_cmd = "?"
+
+@client.event
+async def on_ready():
+  print('We have logged in as {0.user}'.format(client))
+
+@client.event
+async def on_message(message):
+  if message.author == client.user:
+    return
+
+  msg = message.content
+
+  if any(word in msg for word in greeting_words):
+    await message.channel.send(random.choice(greeting_response))
+
+  if message.content.startswith("ok"):
+    await message.channel.send(msg)
+
+  if msg.upper() == "CLASH ROYALE":
+    await message.channel.send("EBARBS RAGE AT THE BRIDGE")
+
+  messageContent = message.content.lower()
+
+  if any(word in messageContent for word in warn_words):
+    await message.channel.send('Watch your language.', delete_after=2)
+    await message.delete()
+
+client.run('OTMwODIzNTc1MTIyODk4OTY1.Yd7fAg.vjmQg_IF620L4gktzDmw46PvaoE')
+
